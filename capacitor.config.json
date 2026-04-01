@@ -1,0 +1,16 @@
+{
+  "appId": "com.zero.messenger",
+  "appName": "Ventus Messenger",
+  "webDir": "www",
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": ["email", "profile"],
+      "serverClientId": "531705121466-8pd0jorg2bbfik1b0o7o15iodsfhco6k.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": false
+    }
+  },
+  "server": {
+    "url": "https://sampikloren-star.github.io/ventus-app",
+    "cleartext": false
+  }
+}
