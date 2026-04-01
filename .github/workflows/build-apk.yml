@@ -29,8 +29,39 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
       
-      - name: Decode google-services.json
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
+      - name: Create google-services.json
+        run: |
+          cat > android/app/google-services.json << 'GSEOF'
+          {
+            "project_info": {
+              "project_number": "462345718294",
+              "project_id": "zero-messenger-898c4",
+              "storage_bucket": "zero-messenger-898c4.firebasestorage.app"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:462345718294:android:ef9b2971dfc05510960337",
+                  "android_client_info": {
+                    "package_name": "com.zero.messenger"
+                  }
+                },
+                "oauth_client": [],
+                "api_key": [
+                  {
+                    "current_key": "AIzaSyCc_2y2azGwgbSIlTm9dhEugRknILrsD20"
+                  }
+                ],
+                "services": {
+                  "appinvite_service": {
+                    "other_platform_oauth_client": []
+                  }
+                }
+              }
+            ],
+            "configuration_version": "1"
+          }
+          GSEOF
       
       - name: Add server_client_id
         run: |
