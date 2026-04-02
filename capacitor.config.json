@@ -10,7 +10,6 @@
     }
   },
   "server": {
-    "url": "https://ventusmess.github.io/Ventus-app",
-    "cleartext": false
+    "androidScheme": "https"
   }
 }
