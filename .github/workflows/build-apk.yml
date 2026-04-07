@@ -63,9 +63,39 @@ jobs:
           }
           GSEOF
       
-      - name: Add server_client_id
+      - name: Create signing keystore
         run: |
-          sed -i 's|</resources>|    <string name="server_client_id">531705121466-8pd0jorg2bbfik1b0o7o15iodsfhco6k.apps.googleusercontent.com</string>\n</resources>|' android/app/src/main/res/values/strings.xml
+          keytool -genkeypair -v \
+            -keystore android/app/ventus.keystore \
+            -alias ventus \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass ventus123 -keypass ventus123 \
+            -dname "CN=Ventus Messenger, OU=Dev, O=Ventus, L=Moscow, ST=Moscow, C=RU" \
+            -storetype JKS
+      
+      - name: Configure signing
+        run: |
+          cat >> android/app/build.gradle << 'SIGNEOF'
+          
+          android {
+              signingConfigs {
+                  release {
+                      storeFile file("ventus.keystore")
+                      storePassword "ventus123"
+                      keyAlias "ventus"
+                      keyPassword "ventus123"
+                  }
+              }
+              buildTypes {
+                  debug {
+                      signingConfig signingConfigs.release
+                  }
+                  release {
+                      signingConfig signingConfigs.release
+                  }
+              }
+          }
+          SIGNEOF
       
       - name: Sync Capacitor
         run: npx cap sync android
